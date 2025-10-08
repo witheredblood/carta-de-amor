@@ -437,61 +437,43 @@ body::before {
     .triangle { width: 110px; height: 60px; }
 }
 
-/* Estilos para el mensaje de bienvenida */
-.welcome-message {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2.2em;
-    color: #c71585;
-    padding: 0;
-    border-radius: 0;
-    box-shadow: none;
-    font-family: 'Dancing Script', cursive;
-    opacity: 1;
-    transition: opacity 1.2s ease;
-    z-index: 100;
-    background: none;
+/* --- Adaptabilidad para móviles sin alterar diseño base --- */
+@media (max-width: 430px) {
+    .letter-container {
+        max-width: 100vw;
+        padding: 0 2vw;
+        box-sizing: border-box;
+    }
+    .envelope-geom,
+    .envelope,
+    .rectangle,
+    .triangle.top,
+    .triangle.bottom,
+    .triangle.top.background.top,
+    .triangle.bottom.background.bottom {
+        width: 95vw !important;
+        max-width: 95vw !important;
+        min-width: 0 !important;
+        height: auto !important;
+    }
+    .envelope-seal {
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .letter-paper {
+        max-width: 98vw;
+        padding: 6vw 2vw;
+        box-sizing: border-box;
+    }
+    .qr-container img {
+        max-width: 80vw;
+        height: auto;
+    }
 }
 
-.welcome-message.fade-out {
-    opacity: 0;
-}
-
-.envelope-geom {
-    opacity: 1;
-    transition: opacity 1.2s ease;
-}
-
-.envelope-geom.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-#envelopes-list {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    align-items: center;
-    justify-content: center;
-    min-height: 60vh;
-    width: 100%;
-}
-
-.back-btn {
-    margin-top: 40px;
-    padding: 14px 32px;
-    background: linear-gradient(145deg, #ffe0ec, #e7b86a);
-    color: #c71585;
-    border: none;
-    border-radius: 32px;
-    font-size: 1.2em;
-    font-family: 'Dancing Script', cursive;
-    cursor: pointer;
-    box-shadow: 0 4px 16px rgba(218,165,32,0.12);
-    transition: background 0.3s;
-}
-.back-btn:hover {
-    background: linear-gradient(145deg, #e7b86a, #ffe0ec);
+/* Evita desbordes horizontales en cualquier pantalla */
+body, html {
+    overflow-x: hidden;
+    max-width: 100vw;
 }
