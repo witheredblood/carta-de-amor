@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre geométrico con 4 triángulos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Georgia:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="letter-container">
+        <div id="welcome-message" class="welcome-message">
+            bla bla bla bla bla bla bla bla bla bla bla
+        </div>
+        <div id="envelopes-list" style="display:none;">
+            <div class="envelope-geom" data-index="0">
+                <div class="triangle top"></div>
+                <div class="triangle background top"></div>
+                <div class="rectangle"></div>
+                <div class="triangle background bottom"></div>
+                <div class="triangle bottom"></div>
+                <div class="envelope-seal" id="seal-0">❤️</div>
+            </div>
+            <div class="envelope-geom" data-index="1">
+                <div class="triangle top"></div>
+                <div class="triangle background top"></div>
+                <div class="rectangle"></div>
+                <div class="triangle background bottom"></div>
+                <div class="triangle bottom"></div>
+                <div class="envelope-seal" id="seal-1">💙</div>
+            </div>
+            <div class="envelope-geom" data-index="2">
+                <div class="triangle top"></div>
+                <div class="triangle background top"></div>
+                <div class="rectangle"></div>
+                <div class="triangle background bottom"></div>
+                <div class="triangle bottom"></div>
+                <div class="envelope-seal" id="seal-2">💚</div>
+            </div>
+        </div>
+        <!-- QR debajo de los sobres -->
+        <div class="qr-container" id="qr-below-envelopes" style="display:none;">
+            <img src="spotify_playlist_qr.png" alt="Código QR" width="180" height="180">
+        </div>
+        <div id="open-letter" class="letter-open hidden">
+            <div class="letter-paper">
+                <div class="letter-title">Para ti...</div>
+                <div id="letter-text">
+                    Querida persona especial,<br>
+                    Quería decirte que eres la luz que ilumina mis días y el motivo de mis sonrisas.<br>
+                    Gracias por estar siempre a mi lado.<br>
+                    Te quiero mucho.
+                </div>
+                <div class="letter-signature">maybe idfk</div>
+                <button id="back-btn" class="back-btn">Volver a los sobres</button>
+            </div>
+        </div>
+    </div>
+    <!-- Contenedores para efectos -->
+    <div id="hearts-container"></div>
+    <div id="petals-container"></div>
+    <script src="script.js"></script>
+</body>
+</html>
