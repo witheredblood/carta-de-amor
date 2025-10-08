@@ -1,14 +1,17 @@
-body {
-    /* Fondo más cálido y romántico con degradado y brillo */
+html, body {
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+    width: 100vw;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    width: 100vw;
     background: linear-gradient(135deg, #fff5e6 0%, #ffe0ec 60%, #f9d6b8 100%);
-    /* Sutil overlay de brillo */
     position: relative;
 }
 body::before {
@@ -16,362 +19,228 @@ body::before {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    background: radial-gradient(circle at 70% 20%, rgba(255, 236, 179, 0.18) 0%, transparent 70%),
-                radial-gradient(circle at 20% 80%, rgba(255, 182, 193, 0.10) 0%, transparent 80%);
+    background: radial-gradient(circle at 70% 20%, rgba(255,236,179,0.18) 0%, transparent 70%),
+                radial-gradient(circle at 20% 80%, rgba(255,182,193,0.10) 0%, transparent 80%);
     z-index: 0;
 }
 
 .letter-container {
-    text-align: center;
-    max-width: 500px;
-    margin: 0; /* Quita el margen lateral */
     width: 100vw;
     min-height: 100vh;
-    position: relative;
-    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 48px 0 rgba(218,165,32,0.10), 0 2px 8px 0 rgba(255,182,193,0.10);
-}
-
-/* Carta cerrada: Sobre realista con solapa triangular */
-.letter-closed {
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Animación suave */
-}
-
-.letter-closed:hover {
-    transform: scale(1.03) rotate(1deg); /* Movimiento natural */
-}
-
-.envelope {
-    position: relative;
-    width: 340px;
-    height: 220px;
-    background: none;
-    box-shadow: 0 8px 32px rgba(139,69,19,0.10);
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-}
-
-/* Base del sobre (rectángulo central) */
-.envelope-base {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 340px;
-    height: 140px;
-    background: #fff; /* blanco puro */
-    border-radius: 0 0 16px 16px;
-    border: 2px solid #cd853f;
-    box-shadow: 0 4px 24px rgba(139,69,19,0.10);
-    z-index: 2;
-}
-
-/* Solapa superior (triángulo grande) */
-.envelope-flap {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 340px;
-    height: 90px;
-    background: #fff; /* blanco puro */
-    clip-path: polygon(0 0, 50% 100%, 100% 0);
-    border: 2px solid #cd853f;
-    border-radius: 16px 16px 0 0;
-    box-shadow: 0 8px 24px rgba(139,69,19,0.08);
-    z-index: 3;
-}
-
-/* Solapas laterales (triángulos pequeños, opcionales) */
-.envelope-side-left,
-.envelope-side-right {
-    position: absolute;
-    top: 90px; /* Alinea con el borde superior del rectángulo */
-    width: 0;
-    height: 80px;
-    background: transparent;
-    z-index: 3;
-    border: none;
+    justify-content: flex-start; /* Cambia a flex-start para apilar desde arriba */
     box-sizing: border-box;
-}
-.envelope-side-left {
-    left: 0;
-    border-top: 40px solid transparent;
-    border-bottom: 40px solid transparent;
-    border-right: 60px solid #fff; /* blanco puro */
-    /* Opcional: borde dorado en el lado derecho */
-    box-shadow: 2px 0 8px rgba(139,69,19,0.06);
-}
-.envelope-side-right {
-    right: 0;
-    border-top: 40px solid transparent;
-    border-bottom: 40px solid transparent;
-    border-left: 60px solid #fff; /* blanco puro */
-    /* Opcional: borde dorado en el lado izquierdo */
-    box-shadow: -2px 0 8px rgba(139,69,19,0.06);
+    padding: 0 2vw;
+    position: relative;
+    z-index: 1;
 }
 
-/* Nueva geometría del sobre: triángulos */
+#welcome-message {
+    font-size: clamp(1.2em, 5vw, 2.2em);
+    color: #c71585;
+    font-family: 'Dancing Script', cursive;
+    margin-top: 4vh;
+    margin-bottom: 2em;
+    text-align: center;
+}
+
+#envelopes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 0.5em;
+}
+
 .envelope-geom {
     position: relative;
-    width: 340px;
-    height: 220px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: min(90vw, 340px);
+    height: min(58vw, 220px);
+    min-width: 180px;
+    min-height: 100px;
     background: linear-gradient(120deg, #fffbe9 60%, #ffe4e1 100%);
     border-radius: 22px;
-    box-shadow: 0 8px 32px 0 rgba(218,165,32,0.10), 0 2px 8px 0 rgba(255,182,193,0.10);
+    box-shadow: 0 8px 32px 0 rgba(218,165,32,0.10);
     border: 2.5px solid #e7b86a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* ---------- TRIÁNGULOS DEL SOBRE GEOMÉTRICO ---------- */
-
-/* Triángulo superior */
-.triangle.top {
-    position: absolute;
-    width: 300px;
-    height: 120px;
-    background: linear-gradient(135deg, #fff 70%, #ffe4e1 100%);
-    box-sizing: border-box;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%) rotate(180deg);
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-    border: 3px solid #e7b86a;
-    box-shadow: 0 8px 24px rgba(218,165,32,0.10), 0 2px 8px rgba(255,182,193,0.10);
-    z-index: 3;
-}
-.triangle.top.background.top {
-    position: absolute;
-    width: 311px;
-    height: 122px;
-    background: linear-gradient(135deg, #e7b86a 0%, #cd853f 100%);
-    box-sizing: border-box;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%) rotate(180deg);
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-    box-shadow: 0 8px 24px rgba(139,69,19,0.08);
-    z-index: 2;
-}
-
-
-/* Triángulo inferior */
+.triangle.top,
 .triangle.bottom {
     position: absolute;
-    width: 300px;
-    height: 110px;
-    background: linear-gradient(135deg, #fff 60%, #ffe4e1 100%);
-    box-sizing: border-box;
-    bottom: 0;
     left: 50%;
-    transform: translateX(-50%) rotate(0deg);
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    width: 88%;
+    height: 48%;
+    background: #fff;
     border: 3px solid #e7b86a;
-    box-shadow: 0 8px 24px rgba(218,165,32,0.10), 0 2px 8px rgba(255,182,193,0.10);
-    z-index: 2;
-}
-.triangle.bottom.background.bottom {
-    position: absolute;
-    width: 311px;
-    height: 112px;
-    background: linear-gradient(135deg, #e7b86a 0%, #cd853f 100%);
     box-sizing: border-box;
+    z-index: 3;
+}
+.triangle.top {
+    top: 0;
+    transform: translateX(-50%) rotate(180deg);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+.triangle.bottom {
     bottom: 0;
-    left: 50%;
     transform: translateX(-50%) rotate(0deg);
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-    box-shadow: 0 8px 24px rgba(139,69,19,0.08);
+}
+.triangle.background.top,
+.triangle.background.bottom {
+    position: absolute;
+    left: 50%;
+    width: 92%;
+    height: 50%;
+    background: #e7b86a;
     z-index: 2;
 }
-/* Rectángulo central */
+.triangle.background.top {
+    top: 0;
+    transform: translateX(-50%) rotate(180deg);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+.triangle.background.bottom {
+    bottom: 0;
+    transform: translateX(-50%) rotate(0deg);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
 .rectangle {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 309px;
-    height: 220px;
-    background: linear-gradient(120deg, #fffbe9 60%, #ffe4e1 100%);
+    width: 94%;
+    height: 100%;
+    background: #fff;
     border: 3px solid #e7b86a;
     box-sizing: border-box;
     transform: translate(-50%, -50%);
     z-index: 1;
-    box-shadow: 0 4px 16px rgba(218,165,32,0.10), 0 2px 8px rgba(255,182,193,0.10);
+    border-radius: 10px;
 }
 
-/* ---------- FIN TRIÁNGULOS DEL SOBRE GEOMÉTRICO ---------- */
-
-/* Sello centrado */
 .envelope-seal {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 38px;
-    height: 38px;
+    width: clamp(28px, 12vw, 38px);
+    height: clamp(28px, 12vw, 38px);
     background: radial-gradient(circle at 60% 40%, #ffe0ec 0%, #e7b86a 80%);
     border-radius: 50%;
     border: 2.5px solid #e7b86a;
-    box-shadow: 0 2px 12px rgba(218,165,32,0.18), 0 0 0 8px rgba(255,236,179,0.10);
+    box-shadow: 0 2px 12px rgba(218,165,32,0.18);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
+    font-size: clamp(18px, 6vw, 26px);
     color: #c71585;
-    /* Efecto de brillo */
-    filter: drop-shadow(0 0 8px #fff8dc);
     z-index: 10;
 }
 
-/* Sombra general para profundidad */
-.envelope::after {
-    content: '';
-    position: absolute;
+.qr-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5em 0 2em 0;
+    width: 100%;
+    /* Centra el QR en todos los casos */
+    text-align: center;
+}
+.qr-container img {
+    display: block;
+    margin: 0 auto;
+    width: clamp(100px, 40vw, 180px);
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(218,165,32,0.15);
+    border: 2px solid #e7b86a;
+    background: #fffbe9;
+    padding: 8px;
+}
+
+.letter-open {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
     left: 0;
     top: 0;
-    width: 340px;
-    height: 220px;
-    border-radius: 18px;
-    box-shadow: 0 16px 36px rgba(218,165,32,0.10);
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.18;
+    background: rgba(255,255,255,0.96);
+    z-index: 100;
+    transition: opacity 0.5s;
 }
-
-/* Texto cerrado */
-.closed-text {
-    margin-top: 30px;
-    font-size: 1.4em;
-    font-style: italic;
-    color: #b8860b;
-    font-family: 'Dancing Script', cursive;
-    text-shadow: 1px 1px 8px #fff8dc, 1px 1px 2px rgba(0, 0, 0, 0.08);
-}
-
-.closed-text small {
-    display: block;
-    font-size: 0.9em;
-    color: #e7b86a;
-    margin-top: 5px;
-    font-family: 'Georgia', serif;
-}
-
-/* Carta abierta: Despliegue elegante */
-.letter-open {
-    transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    opacity: 1;
-    transform: scale(1) rotateY(0deg) translateY(0);
-    box-shadow: 0 12px 48px 0 rgba(218,165,32,0.15), 0 2px 8px 0 rgba(255,182,193,0.10);
-}
-
 .letter-open.hidden {
-    opacity: 0;
-    pointer-events: none;
-    transform: scale(0.85) rotateY(90deg) translateY(20px);
+    display: none !important;
 }
-
 .letter-paper {
-    background:
-        linear-gradient(145deg, #fffaf0 0%, #fffbe9 100%),
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.8) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.6) 0%, transparent 50%); /* Textura arrugada */
-    border: 3.5px solid #e7b86a; /* Dorado elegante */
+    background: linear-gradient(145deg, #fffaf0 0%, #fffbe9 100%);
+    border: 3.5px solid #e7b86a;
     border-radius: 25px;
-    padding: 60px 40px;
-    box-shadow:
-        0 20px 40px rgba(218, 165, 32, 0.18),
-        0 2px 8px rgba(255,182,193,0.10),
-        inset 0 2px 4px rgba(255, 255, 255, 0.8),
-        inset 0 -2px 4px rgba(218, 165, 32, 0.2);
-    max-width: 480px;
+    padding: clamp(18px, 6vw, 60px) clamp(12px, 4vw, 40px);
+    box-shadow: 0 20px 40px rgba(218, 165, 32, 0.18);
+    max-width: 98vw;
     margin: 0 auto;
     position: relative;
     font-family: 'Dancing Script', cursive;
     transform-style: preserve-3d;
+    overflow-y: auto;
 }
-
-.letter-paper::before {
-    content: '';
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    background: repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 2px,
-        rgba(218, 165, 32, 0.08) 2px,
-        rgba(218, 165, 32, 0.08) 4px
-    ); /* Líneas sutiles como papel rayado */
-    border-radius: 20px;
-    z-index: -1;
-}
-
 .letter-title {
-    font-size: 3.2em;
+    font-size: clamp(1.5em, 6vw, 3.2em);
     color: #c71585;
-    margin-bottom: 30px;
+    margin-bottom: 1em;
     font-weight: 700;
     text-align: center;
-    text-shadow: 2px 2px 8px #fff8dc, 2px 2px 4px rgba(0, 0, 0, 0.10);
     letter-spacing: 1px;
 }
-
 #letter-text {
-    font-size: 1.4em;
+    font-size: clamp(1em, 3vw, 1.4em);
     line-height: 1.8;
     text-align: justify;
-    opacity: 0;
-    transition: opacity 0.6s ease;
     font-family: 'Georgia', serif;
     color: #b8860b;
-    margin-bottom: 35px;
-    text-shadow: 1px 1px 8px #fff8dc, 1px 1px 2px rgba(255, 182, 193, 0.10);
+    margin-bottom: 1.5em;
 }
-
 .letter-signature {
-    font-size: 1.6em;
+    font-size: clamp(1em, 3vw, 1.6em);
     font-style: italic;
-    margin-top: 45px;
+    margin-top: 2em;
     color: #e7b86a;
     text-align: right;
     font-family: 'Dancing Script', cursive;
     border-top: 2.5px dashed #e7b86a;
-    padding-top: 20px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    padding-top: 1em;
 }
-
-/* Botón refinado */
-#open-btn {
-    margin-top: 30px;
-    padding: 16px 32px;
+.back-btn {
+    margin-top: 2em;
+    padding: 12px 28px;
     background: linear-gradient(145deg, #ffe0ec, #e7b86a);
     color: #c71585;
     border: none;
-    border-radius: 40px;
-    cursor: pointer;
-    font-size: 1.3em;
+    border-radius: 32px;
+    font-size: clamp(1em, 2vw, 1.2em);
     font-family: 'Dancing Script', cursive;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow: 0 8px 16px rgba(218,165,32,0.18);
-    font-weight: 600;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(218,165,32,0.12);
+    transition: background 0.3s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
-
-#open-btn:hover {
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 12px 24px rgba(218,165,32,0.22);
-}
-
-#open-btn.hidden {
-    display: none;
+.back-btn:hover {
+    background: linear-gradient(145deg, #e7b86a, #ffe0ec);
 }
 
 /* Efectos flotantes sutiles */
@@ -379,12 +248,11 @@ body::before {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     pointer-events: none;
     z-index: 0;
 }
-
 .heart, .petal {
     position: absolute;
     font-size: 22px;
@@ -392,10 +260,8 @@ body::before {
     animation: romanticFloat 6s linear infinite;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
-
 .heart { color: #ff69b4; }
 .petal { color: #e7b86a; font-size: 20px; }
-
 @keyframes romanticFloat {
     0% {
         transform: translateY(100vh) rotate(0deg) scale(0.5);
@@ -412,70 +278,6 @@ body::before {
     100% {
         transform: translateY(-20vh) rotate(720deg) scale(0.5);
         opacity: 0;
-    }
-}
-
-/* Responsive mejorado */
-@media (max-width: 600px) {
-    .letter-container {
-        max-width: 100vw;
-        min-width: 0;
-        padding: 0 2vw;
-        box-sizing: border-box;
-    }
-    #envelopes-list {
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: flex-end !important;
-        width: 100vw !important;
-        max-width: 100vw !important;
-        gap: 18px !important;
-        overflow-x: visible !important;
-    }
-    .envelope-geom {
-        width: 95vw !important;
-        height: auto !important;
-        min-width: 0 !important;
-        max-width: 320px !important;
-        margin: 0 auto !important;
-    }
-    .envelope,
-    .rectangle,
-    .triangle.top,
-    .triangle.bottom,
-    .triangle.top.background.top,
-    .triangle.bottom.background.bottom {
-        width: 95vw !important;
-        max-width: 320px !important;
-        min-width: 0 !important;
-        height: auto !important;
-    }
-    .envelope-seal {
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-    }
-    .letter-paper {
-        max-width: 98vw;
-        padding: 6vw 2vw;
-        box-sizing: border-box;
-    }
-    .qr-container img {
-        max-width: 80vw;
-        height: auto;
-    }
-    .letter-title {
-        font-size: 2em;
-    }
-    #letter-text {
-        font-size: 1.1em;
-    }
-    .letter-signature {
-        font-size: 1.1em;
-    }
-    .back-btn {
-        font-size: 1em;
-        padding: 10px 18px;
     }
 }
 
